@@ -4,25 +4,74 @@
 
 #include <stdio.h>
 #include "matdin.h"
+#include "game.h"
 
-struct miniTab
+typedef struct miniTabuleiro miniTab;
+
+struct  miniTabuleiro
 {
    char **grid;
    int numName;
    char value;
-} miniTab1;
+};
 
 
 int main(){
-    char **tab;
+    int i;
 
-    tab = miniTab1.grid;
+    char point, peca;
+    int jogador, jogadas, endGame, x, y;
 
-    tab = criaMat(3, 3);
+    endGame = 0;
+    jogador = 0;
 
-    if(tab!=NULL){ //Caso a criação seja um sucesso, escreve a matriz na consola
-        mostraMat(tab, 3, 3);
+    miniTab mT[9];
+
+    //for (i = 0; (i < 9) && (mT[i].grid != NULL) ; i++) → parte do "caso falha a criação da matriz"
+    for (i = 0; i < 9 ; i++)
+    {
+        mT[i].grid = criaMat(3, 3);
+
+        if(mT[i].grid==NULL){ //Caso falha na criação na matriz
+            printf("%d - Error!!", i+1);
+        }
+            
+        printf("%d - Certo\n", i+1);
     }
+    
+    mostraMat(mT[0].grid,3,3);
+    jogadas = 0;
+
+    while (endGame != 1 && jogadas < 9)
+    {
+        printf("faz a sua jogada: ");
+        scanf("%d %d", &x, &y);
+
+        point = getPos(mT[0].grid,x,y);
+        if(point != '_'){
+            printf("Jogada invalida!!\n");
+        }else{
+            if(jogador == 0){
+                peca = '0';
+                jogador++;
+            }else{
+                peca = 'X';
+                jogador--;
+            }
+
+            setPos(mT[0].grid, x, y, peca);
+        }
+
+        mostraMat(mT[0].grid,3,3);
+
+        if(checkWin(mT[0].grid,3,3))
+        {
+            endGame = 1;
+        }
+        jogadas++;
+    }
+    
+    printf("Acabou");
 
     return 0;
 }
