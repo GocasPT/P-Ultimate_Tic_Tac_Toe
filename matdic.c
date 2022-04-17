@@ -1,6 +1,6 @@
 // Trabalho Pratico Programacao - LEI
 // DEIS-ISEC 2021-2022
-//Guilherme de Sousa Camacho - 2021138502
+// Guilherme de Sousa Camacho - 2021138502
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,4 +51,21 @@ void mostraMat(char **p, int nLin, int nCol){
             printf("%c\t", p[i][j]);
         putchar('\n');
     }
+    printf("\n");
+}
+
+char** prencMat(char **p, int nLin, int nCol){
+    int i, j, k;
+    char num;
+
+    k=1;
+    for(i=0; i<nLin; i++){
+        for(j=0; j<nCol; j++){
+            num = k + '0';
+            setPos(p, i, j, num);
+            k++;
+        }
+    }
+
+    return p;
 }
