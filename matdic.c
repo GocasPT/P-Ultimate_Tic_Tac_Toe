@@ -55,10 +55,9 @@ void mostraMat(char **p, int nLin, int nCol){
 }
 
 char** prencMat(char **p, int nLin, int nCol){
-    int i, j, k;
+    int i, j, k = 1;
     char num;
 
-    k=1;
     for(i=0; i<nLin; i++){
         for(j=0; j<nCol; j++){
             num = k + '0';

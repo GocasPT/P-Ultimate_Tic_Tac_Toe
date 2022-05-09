@@ -9,6 +9,7 @@
 // Devolve 1 caso seja verdade, 0 caso seja falso
 int checkWin(char **p, int nLin, int nCol);
 
-void mostraGuia(char **p, int nLin, int nCol);
+// Função que transfomra o numero de 1 a 9 em sua correspondente coordenadas do tabuleiro
+void coorTrans(int coor, int nLin, int *x, int *y);
 
 #endif /* GAME_H */
