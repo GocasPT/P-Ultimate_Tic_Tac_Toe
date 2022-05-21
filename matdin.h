@@ -26,4 +26,8 @@ char getPos(char **p, int x, int y);
 // Devolve endereço inicial da matriz
 char** prencMat(char **p, int nLin, int nCol);
 
+// Faz uma cópia da matriz
+// Devolve endereço inicial da matriz
+char** copyMat(char **p, int nLin, int nCol);
+
 #endif /* MATDIN_H */

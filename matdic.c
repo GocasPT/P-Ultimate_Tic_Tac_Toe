@@ -7,7 +7,6 @@
 #include "matdin.h"
 
 void libertaMat(char** p, int nLin){
-
     int i;
 
     for(i=0; i<nLin; i++)
@@ -67,4 +66,17 @@ char** prencMat(char **p, int nLin, int nCol){
     }
 
     return p;
+}
+
+char** copyMat(char **p, int nLin, int nCol){
+    int i, j;
+    char **out = criaMat(nLin, nCol);
+    
+    for(i=0; i<nLin; i++){
+        for(j=0; j<nCol; j++){
+            out[i][j] = p[i][j];
+        }
+    }
+    
+    return out;
 }
