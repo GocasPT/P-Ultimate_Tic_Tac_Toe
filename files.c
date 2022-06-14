@@ -7,9 +7,8 @@
 #include "game.h"
 #include "files.h"
 
-void saveFile(plista p, int num, miniTab *mTab, int nLinMintab, char **Tab, int nLinTab){
+void saveFile(phisto lista, int total){    
     FILE *f;
-    int i;
 
     f = fopen("jogo.bin", "wb");
 
@@ -17,38 +16,40 @@ void saveFile(plista p, int num, miniTab *mTab, int nLinMintab, char **Tab, int 
         printf("Erro no acesso ao ficheiro\n");
         return;
     }
+        
+    fwrite(&total, sizeof(int), 1, f);
 
-    fwrite(&num, sizeof(int), 1, f);
-    fwrite(p, sizeof(plista), num, f);
-
-    fwrite(Tab, sizeof(char**), nLinTab, f);
-    fwrite(mTab, nLinTab, nLinMintab, f);
-
-    fclose(f);
+    while(lista != NULL){
+        fwrite(lista, sizeof(histo), 1, f);
+        lista = lista->prox;
+    }
+    
+    fclose(f);  
 }
 
-void loadFile(plista *p, int *total){
+void loadFile(phisto lista, int *total){
     FILE *f;
-    plista aux;
-
+    
     *total = 0;
-    if( (f = fopen("jogo.bin", "rb")) == NULL){
+
+    f = fopen("jogo.bin", "rb");
+
+    if(f==NULL){
         printf("Erro no acesso ao ficheiro\n");
-        return;
+        return NULL;
     }
 
-    fread(p, sizeof(plista), 1, f);
+    fread(total, sizeof(int), 1, f);
 
-    while (feof(f) == 0)
-    {
-        p[(*total)++] = aux;
-        read(&aux, sizeof(plista), 1, f);
+    while(fread(lista, sizeof(histo), 1, f) != EOF){
+        fread(lista, sizeof(histo), 1, f);
     }
-
+    
     fclose(f);
+    return lista;
 }
 
-int saveExit(){
+int saveFileExists(){
     FILE *f;
 
     f = fopen("jogo.bin", "rb");
@@ -58,6 +59,9 @@ int saveExit(){
         return 1;
 }
 
-void saveCreditFile(){
-    
+void saveDelet(){
+    if (remove("jogo.bin") == 0)
+      printf("Deleted successfully");
+   else
+      printf("Unable to delete the file");
 }

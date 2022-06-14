@@ -17,29 +17,29 @@
 #define mTLength 9   // Númeor de miniTabuleiros criados
 
 typedef struct miniTabuleiro miniTab;
-typedef struct listaJogadas lista, *plista;
+typedef struct historicoJogadas histo, *phisto;
 
-struct  miniTabuleiro
+/* struct miniTabuleiro
 {
     char **grid;    // Matriz do Mini Tabuleiro
     int numName;    // Numero do Mini Tabuleiros (1 a 9)
     char value;   // Valor do Mini Tabuleiros para o Tabuleiro global (X ou O)
-};
+}; */
 
-struct listaJogadas
+/* struct historicoJogadas
 {
     int numItem;    // Número da jogada <=> númeor do item
     char player;    // O nome do jogador que fez a jogada
     char **bigScreen;   // "Screenshot" ao Tabuleiro gloval
     int numTab;   // Indentificação do Mini tabuleiro
     char **screen;   // "Screenshot" ao Mini Tabuleiro
-    plista prox;    // Próximo elemento da lista
-};
+    phisto prox;    // Próximo elemento da lista
+}; */
 
-plista addPlay(plista p, int num, char peca, char **tab, int numTab, char **miniTab){
-    plista novo, aux;
+phisto addPlay(phisto p, int num, char peca, char **tab, int numTab, char **miniTab){
+    phisto novo, aux;
 
-    if((novo = malloc(sizeof(lista))) == NULL){
+    if((novo = malloc(sizeof(histo))) == NULL){
         printf("Erro na alocacao de memoria\n");
     } else {
         fillItem(novo, num, peca, tab, numTab, miniTab);
@@ -56,7 +56,7 @@ plista addPlay(plista p, int num, char peca, char **tab, int numTab, char **mini
     return p;
 }
 
-void fillItem(plista p, int n, char peca, char **tab, int nT, char **mT){
+void fillItem(phisto p, int n, char peca, char **tab, int nT, char **mT){
     p->numItem = n;
     p->player = peca;
     p->bigScreen = copyMat(tab, S, S);
@@ -65,15 +65,16 @@ void fillItem(plista p, int n, char peca, char **tab, int nT, char **mT){
     p->prox = NULL;
 }
 
-void showList(plista p, int modo){
+void showList(phisto p, int modo){
     int k;
 
     printf("Quantas jogadas anteriores quere? (1 a 10) ");
     do{
         scanf("%d", &k);
-        if(k<=0 || k>=10)
-            printf("Quantidade inválida!\n");
-    }while(k>0 && k<100);
+        if(k<=0 || k>10)
+            printf("Quantidade invalida!\n");
+            fflush(stdin);
+    }while(k<=0 || k>10);
 
     printf("---------Historioco de jogadas---------\n");
 
@@ -152,7 +153,7 @@ void resetGame(char** tab, int nLinTab, miniTab* mTab, int nLinMtab){
     }
 }
 
-int nullListCheck(plista p){
+int nullListCheck(phisto p){
     if(p == NULL) {
         return 1;
     } else {
@@ -170,7 +171,7 @@ int startGame(int robotMode, int fileSave){
     char **guideTab, **globalTab;   // Matriz do Tabuleiro guia, Matriz do Tabuleiro global
 
     initRandom();   //Iniciar um timer para o dar valores aleatórios para funções futuras
-    plista lista = NULL; // Iniciar a lista como vazia
+    phisto lista = NULL; // Iniciar a lista como vazia
 
     // Escolhe qual jogador que começa
     jogador = intUniformRnd(0, 1);
@@ -205,7 +206,11 @@ int startGame(int robotMode, int fileSave){
     guideTab = prencMat(guideTab, N, N);
 
     if(fileSave){
-        printf("Carregar files...\n");
+        printf("Carregar save...\n");
+        
+        loadFile(lista, &jogadas);
+
+        printf("Carregameno completo!\n");
     }
 
     // Mostra tabuleiro global (Inicio de jogo)
@@ -291,7 +296,7 @@ int startGame(int robotMode, int fileSave){
                     scanf("%c", &resposta);
                     resposta = toupper(resposta);
                     if(resposta == 'Y'){
-                        saveFile(lista, jogadas, mT, N, globalTab, S);
+                        saveFile(lista, jogadas);
                         printf("Salvo\n");
                         return 0;
                     }
@@ -395,11 +400,17 @@ int startGame(int robotMode, int fileSave){
     if(!winner || jogadas >= (N * N * mTLength)){
         printf("Jogo acabou empatado\n");
         resetGame(globalTab, S, mT, N);
+
+        saveDelet();
+
         return 1;
     } else {
         printf("Parabens, o jogador %c ganhou o jogo.\n", peca);
         mostraMat(globalTab, S, S);
         resetGame(globalTab, S, mT, N);
+        
+        saveDelet();
+
         return 1;
     }
 }

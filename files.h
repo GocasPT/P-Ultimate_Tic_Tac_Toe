@@ -7,10 +7,12 @@
 
 #include "game.h"
 
-void saveFile(plista p, int num, miniTab *mTab, int nLinMintab, char **Tab, int nLinTab);
+void saveFile(phisto lista, int total);
 
-void loadFile();
+void loadFile(phisto lista, int *total);
 
-int saveExit();
+int saveFileExists();
+
+void saveDelet();
 
 #endif /* FILES_H */

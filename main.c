@@ -13,10 +13,10 @@
 #include "utils.h"
 
 int main(){
-    int selection, mode, choose = 0, save = 0;   //Modo de jogo (0 → PvP; 1 → PvM)
+    int selection, mode = 0, choose = 0, save = 0;   // Modo de jogo (0 → PvP; 1 → PvM)
     char resposta;
 
-    //Bloco de menu
+    //  Bloco de menu
     while (!choose)
     {
         printf("\t+------------------------------------+\n"
@@ -31,7 +31,7 @@ int main(){
             "\t\t|                |\n"
             "\t\t+----------------+\n");
 
-        if(saveExit()){
+        if(saveFileExists()){
             printf("\t\t+----------------+\n"
                 "\t\t|                |\n"
                 "\t\t|  Load save - 2 |\n"
@@ -78,12 +78,15 @@ int main(){
                 mode=1;
             else
                 mode=0;
+
+            //saveDelet();
+
             break;
 
         case 2:
-            if(saveExit())
+            if(saveFileExists())
                 save = 1;
-            break;
+                break;
 
         case 3:
             printf("Tem a certeza que quere sair do programa? (Y/N) ");
