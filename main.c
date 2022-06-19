@@ -3,8 +3,6 @@
 // Guilherme de Sousa Camacho - 2021138502
 
 #include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
 #include <ctype.h>
 
 #include "files.h"
@@ -79,7 +77,7 @@ int main(){
             else
                 mode=0;
 
-            //saveDelet();
+            saveDelet();
 
             break;
 
