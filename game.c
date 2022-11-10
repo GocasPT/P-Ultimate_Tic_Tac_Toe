@@ -391,7 +391,7 @@ int startGame(int robotMode, int fileSave){
     
     if(!winner || jogadas >= (N * N * mTLength)){
         printf("Jogo acabou empatado\n");
-        resetGame(globalTab, S, mT, N);
+        //resetGame(globalTab, S, mT, N);
 
         saveDelet();
 
@@ -399,7 +399,7 @@ int startGame(int robotMode, int fileSave){
     } else {
         printf("Parabens, o jogador %c ganhou o jogo.\n", peca);
         mostraMat(globalTab, S, S);
-        resetGame(globalTab, S, mT, N);
+        //resetGame(globalTab, S, mT, N);
         
         saveDelet();
 
