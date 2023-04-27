@@ -1,4 +1,4 @@
-# PROG-Ultimate-Tic-Tac-Toe
+# PROG - Ultimate Tic-Tac-Toe
 ISEC - Trabalho de P [21/22] 
 
 Nota: 75%
